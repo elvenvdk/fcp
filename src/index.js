@@ -1,12 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import "./index.css";
+import App from "./components/App";
+import Stack from "./components/Stack";
+import rootReducer from "./reducers";
+import { setStack } from "./actions";
+import StackForm from "./components/StackForm";
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+const store = createStore(rootReducer);
+store.subscribe(() => console.log("store", store.getState()));
+store.dispatch(setStack({ id: 0, title: "example", cards: [] }));
+
+ReactDOM.render(
+  <Provider store={store}>
+    <Router>
+      <Switch>
+        <Route exact path='/' component={App} />
+        <Route path='/stack' component={Stack} />
+        <Route path='/stack_form' component={StackForm} />
+      </Switch>
+    </Router>
+  </Provider>,
+  document.getElementById("root")
+);
