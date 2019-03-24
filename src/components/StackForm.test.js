@@ -4,13 +4,8 @@ import { StackForm } from "./StackForm";
 
 import setupTests from "../setupTests";
 
-const setup = {
-  title: "",
-  cards: []
-};
-
 describe("StackForm", () => {
-  const stackForm = shallow(<StackForm {...setup} />);
+  const stackForm = shallow(<StackForm />);
 
   it("renders a link home", () => {
     expect(
@@ -31,7 +26,6 @@ describe("StackForm", () => {
   });
 
   it("renders a Form component", () => {
-    console.log(stackForm.debug());
     expect(stackForm.find(".stack-form").exists()).toBe(true);
   });
 
@@ -51,5 +45,75 @@ describe("StackForm", () => {
         .at(1)
         .props().children
     ).toEqual("Add Card");
+  });
+
+  describe("and updating the title", () => {
+    beforeEach(() => {
+      stackForm
+        .find(".stack-form-control-title")
+        .simulate("change", { target: { value: "change title" } });
+    });
+
+    it("updates the title in state", () => {
+      expect(stackForm.state().title).toEqual("change title");
+    });
+  });
+
+  describe("when adding a new card", () => {
+    beforeEach(() => {
+      stackForm
+        .find(".stack-form-button")
+        .at(1)
+        .simulate("click");
+    });
+
+    afterEach(() => {
+      stackForm.setState({ cards: [] });
+    });
+
+    it("adds a new card to stack", () => {
+      console.log(stackForm.state());
+      expect(stackForm.state().cards.length).toEqual(1);
+    });
+    it("renders the prompt section", () => {
+      console.log(stackForm.debug());
+      expect(stackForm.find(".stack-form-label-prompt").exists()).toBe(true);
+    });
+
+    it("renders the answer section", () => {
+      expect(stackForm.find(".stack-form-label-answer").exists()).toBe(true);
+    });
+
+    describe("and updating the card prompt", () => {
+      beforeEach(() => {
+        stackForm
+          .find(".stack-form-control-prompt")
+          .at(0)
+          .simulate("change", { target: { value: "change prompt" } });
+      });
+
+      it("updates the prompt in the state", () => {
+        console.log(stackForm.state());
+        expect(stackForm.state().cards[0].prompt).toEqual("change prompt");
+      });
+    });
+
+    describe("and updating the card answer", () => {
+      beforeEach(() => {
+        stackForm
+          .find(".stack-form-control-answer")
+          .at(0)
+          .simulate("change", { target: { value: "test answer" } });
+      });
+
+      afterEach(() => {
+        stackForm.setState({ cards: [] });
+      });
+
+      it("updates teh answer in the state", () => {
+        console.log(stackForm.state());
+        expect(stackForm.state().cards[0].answer).toEqual("test answer");
+      });
+    });
   });
 });

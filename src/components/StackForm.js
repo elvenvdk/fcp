@@ -33,7 +33,7 @@ export class StackForm extends Component {
 
   addStack() {
     console.log("StackForm state", console.log(this.state));
-    this.props.addStack(this.state);
+    this.props.addStack(this.states);
   }
 
   render() {
