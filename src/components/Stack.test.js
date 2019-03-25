@@ -11,7 +11,6 @@ describe("Stack", () => {
   const stack = shallow(<Stack {...props} />);
 
   it("renders the title", () => {
-    // console.log(stack.debug());
     expect(stack.find("h3").text()).toEqual(props.stack.title);
   });
 

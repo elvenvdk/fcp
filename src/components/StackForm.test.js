@@ -72,11 +72,9 @@ describe("StackForm", () => {
     });
 
     it("adds a new card to stack", () => {
-      console.log(stackForm.state());
       expect(stackForm.state().cards.length).toEqual(1);
     });
     it("renders the prompt section", () => {
-      console.log(stackForm.debug());
       expect(stackForm.find(".stack-form-label-prompt").exists()).toBe(true);
     });
 
@@ -93,7 +91,6 @@ describe("StackForm", () => {
       });
 
       it("updates the prompt in the state", () => {
-        console.log(stackForm.state());
         expect(stackForm.state().cards[0].prompt).toEqual("change prompt");
       });
     });
@@ -111,7 +108,6 @@ describe("StackForm", () => {
       });
 
       it("updates teh answer in the state", () => {
-        console.log(stackForm.state());
         expect(stackForm.state().cards[0].answer).toEqual("test answer");
       });
     });

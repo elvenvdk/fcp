@@ -11,7 +11,6 @@ describe("Stacklist", () => {
   const stackList = shallow(<Stacklist {...props} />);
 
   it("renders the correct number of links", () => {
-    // console.log(stackList.debug());
     const linkCount = stackList.find("Link").length;
     expect(stackList.find("Link").length).toEqual(linkCount);
   });
